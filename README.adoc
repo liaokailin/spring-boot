@@ -5,6 +5,8 @@ Spring Boot makes it easy to create Spring-powered, production-grade application
 services with absolute minimum fuss. It takes an opinionated view of the Spring platform
 so that new and existing users can quickly get to the bits they need.
 
+just test 
+
 You can use Spring Boot to create stand-alone Java applications that can be started using
 `java -jar` or more traditional WAR deployments. We also provide a command line tool
 that runs spring scripts.

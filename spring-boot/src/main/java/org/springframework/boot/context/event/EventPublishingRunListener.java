@@ -43,12 +43,13 @@ public class EventPublishingRunListener implements SpringApplicationRunListener,
 
 	private final ApplicationEventMulticaster initialMulticaster;
 
+
 	public EventPublishingRunListener(SpringApplication application, String[] args) {
 		this.application = application;
 		this.args = args;
 		this.initialMulticaster = new SimpleApplicationEventMulticaster();
 		for (ApplicationListener<?> listener : application.getListeners()) {
-			this.initialMulticaster.addApplicationListener(listener);
+			this.initialMulticaster.addApplicationListener(listener);  //这里把所有的监听都添加到AbstractApplicationEventMulticaster#defaultRetriever中
 		}
 	}
 
@@ -57,6 +58,9 @@ public class EventPublishingRunListener implements SpringApplicationRunListener,
 		return 0;
 	}
 
+    /**
+     * 发布应用开始事件
+     */
 	@Override
 	public void started() {
 		this.initialMulticaster.multicastEvent(new ApplicationStartedEvent(

@@ -106,6 +106,8 @@ public class EmbeddedWebApplicationContext extends GenericWebApplicationContext 
 	private String namespace;
 
 	/**
+	 *
+	 * 注册ServletContextAwareProcessor 用以注入ServletContextAware、ServletConfigAware对应方法
 	 * Register ServletContextAwareProcessor.
 	 * @see ServletContextAwareProcessor
 	 */
@@ -116,6 +118,11 @@ public class EmbeddedWebApplicationContext extends GenericWebApplicationContext 
 		beanFactory.ignoreDependencyInterface(ServletContextAware.class);
 	}
 
+	/**
+	 * 覆写refresh方法
+	 * @throws BeansException
+	 * @throws IllegalStateException
+	 */
 	@Override
 	public final void refresh() throws BeansException, IllegalStateException {
 		try {

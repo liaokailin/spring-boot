@@ -78,12 +78,12 @@ class DefaultApplicationArguments implements ApplicationArguments {
 		@Override
 		public List<String> getNonOptionArgs() {
 			return super.getNonOptionArgs();
-		}
+		}  //单值
 
 		@Override
 		public List<String> getOptionValues(String name) {
 			return super.getOptionValues(name);
-		}
+		}   //key-value
 
 	}
 

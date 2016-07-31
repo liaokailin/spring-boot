@@ -21,7 +21,7 @@ import org.springframework.context.ApplicationEvent;
 
 /**
  * Base class for {@link ApplicationEvent} related to a {@link SpringApplication}.
- *
+ * Spring boot 事件父类，包含命令行参数+SpringApplication对应类实例，SpringApplication为事件源
  * @author Phillip Webb
  */
 @SuppressWarnings("serial")

@@ -66,6 +66,8 @@ import org.springframework.core.io.support.SpringFactoriesLoader;
  * @see ConditionalOnMissingBean
  * @see ConditionalOnClass
  * @see AutoConfigureAfter
+ *
+ * 开启自动配置
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
@@ -75,15 +77,20 @@ import org.springframework.core.io.support.SpringFactoriesLoader;
 @Import(EnableAutoConfigurationImportSelector.class)
 public @interface EnableAutoConfiguration {
 
+	/**
+	 * 该配置设置为false，则不开启自动配置
+	 */
 	String ENABLED_OVERRIDE_PROPERTY = "spring.boot.enableautoconfiguration";
 
 	/**
+	 * 排除指定的Class
 	 * Exclude specific auto-configuration classes such that they will never be applied.
 	 * @return the classes to exclude
 	 */
 	Class<?>[] exclude() default {};
 
 	/**
+	 * 排除指定的ClassName
 	 * Exclude specific auto-configuration class names such that they will never be
 	 * applied.
 	 * @return the class names to exclude

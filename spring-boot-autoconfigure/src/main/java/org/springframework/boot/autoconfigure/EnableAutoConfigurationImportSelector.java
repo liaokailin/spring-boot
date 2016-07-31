@@ -74,6 +74,11 @@ public class EnableAutoConfigurationImportSelector
 
 	private ResourceLoader resourceLoader;
 
+	/**
+	 * 入口，在ConfigurationClassParse#parse中的processDeferredImportSelectors()
+	 * @param metadata
+	 * @return
+	 */
 	@Override
 	public String[] selectImports(AnnotationMetadata metadata) {
 		if (!isEnabled(metadata)) {
@@ -83,7 +88,7 @@ public class EnableAutoConfigurationImportSelector
 			AnnotationAttributes attributes = getAttributes(metadata);
 			List<String> configurations = getCandidateConfigurations(metadata,
 					attributes);
-			configurations = removeDuplicates(configurations);
+			configurations = removeDuplicates(configurations);  // 去重
 			Set<String> exclusions = getExclusions(metadata, attributes);
 			configurations.removeAll(exclusions);
 			configurations = sort(configurations);
@@ -114,7 +119,7 @@ public class EnableAutoConfigurationImportSelector
 	protected AnnotationAttributes getAttributes(AnnotationMetadata metadata) {
 		String name = getAnnotationClass().getName();
 		AnnotationAttributes attributes = AnnotationAttributes
-				.fromMap(metadata.getAnnotationAttributes(name, true));
+				.fromMap(metadata.getAnnotationAttributes(name, true));  //获取@EnableAutoConfiguration注解属性信息
 		Assert.notNull(attributes,
 				"No auto-configuration attributes found. Is " + metadata.getClassName()
 						+ " annotated with " + ClassUtils.getShortName(name) + "?");
@@ -141,7 +146,7 @@ public class EnableAutoConfigurationImportSelector
 	protected List<String> getCandidateConfigurations(AnnotationMetadata metadata,
 			AnnotationAttributes attributes) {
 		List<String> configurations = SpringFactoriesLoader.loadFactoryNames(
-				getSpringFactoriesLoaderFactoryClass(), getBeanClassLoader());
+				getSpringFactoriesLoaderFactoryClass(), getBeanClassLoader());  //加载META-INF/spring.factories中的EnableAutoConfiguration对应value值
 		Assert.notEmpty(configurations,
 				"No auto configuration classes found in META-INF/spring.factories. If you "
 						+ "are using a custom packaging, make sure that file is correct.");

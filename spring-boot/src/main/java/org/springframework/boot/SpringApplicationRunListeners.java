@@ -35,12 +35,12 @@ class SpringApplicationRunListeners {
 
 	private final Log log;
 
-	private final List<SpringApplicationRunListener> listeners;
+	private final List<SpringApplicationRunListener> listeners;  //EventPublishingRunListener
 
 	SpringApplicationRunListeners(Log log,
 			Collection<? extends SpringApplicationRunListener> listeners) {
 		this.log = log;
-		this.listeners = new ArrayList<SpringApplicationRunListener>(listeners);
+		this.listeners = new ArrayList<SpringApplicationRunListener>(listeners);  //
 	}
 
 	public void started() {

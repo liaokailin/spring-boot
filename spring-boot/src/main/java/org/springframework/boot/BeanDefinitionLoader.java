@@ -84,7 +84,7 @@ class BeanDefinitionLoader {
 			this.groovyReader = new GroovyBeanDefinitionReader(registry);
 		}
 		this.scanner = new ClassPathBeanDefinitionScanner(registry);
-		this.scanner.addExcludeFilter(new ClassExcludeFilter(sources));
+		this.scanner.addExcludeFilter(new ClassExcludeFilter(sources));  //排除source类型
 	}
 
 	/**
@@ -155,7 +155,7 @@ class BeanDefinitionLoader {
 				load(loader);
 			}
 		}
-		if (isComponent(source)) {
+		if (isComponent(source)) {  //判断是否包含注解Component
 			this.annotatedReader.register(source);
 			return 1;
 		}

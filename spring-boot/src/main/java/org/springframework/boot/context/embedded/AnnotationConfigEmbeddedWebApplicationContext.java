@@ -61,10 +61,11 @@ public class AnnotationConfigEmbeddedWebApplicationContext
 	 * Create a new {@link AnnotationConfigEmbeddedWebApplicationContext} that needs to be
 	 * populated through {@link #register} calls and then manually {@linkplain #refresh
 	 * refreshed}.
+	 *
 	 */
-	public AnnotationConfigEmbeddedWebApplicationContext() {
-		this.reader = new AnnotatedBeanDefinitionReader(this);
-		this.scanner = new ClassPathBeanDefinitionScanner(this);
+	public AnnotationConfigEmbeddedWebApplicationContext() {  // AnnotationConfigEmbeddedWebApplicationContext 是BeanDefinitionRegistry的子类
+		this.reader = new AnnotatedBeanDefinitionReader(this);  //注解BeanDefinition读取器
+		this.scanner = new ClassPathBeanDefinitionScanner(this);  //通过类路径扫描BeanDefinition
 	}
 
 	/**

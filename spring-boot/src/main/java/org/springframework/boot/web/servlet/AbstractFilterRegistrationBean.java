@@ -222,13 +222,13 @@ abstract class AbstractFilterRegistrationBean extends RegistrationBean {
 			this.logger.info("Filter " + name + " was not registered (disabled)");
 			return;
 		}
-		FilterRegistration.Dynamic added = servletContext.addFilter(name, filter);
+		FilterRegistration.Dynamic added = servletContext.addFilter(name, filter);  //动态添加filter
 		if (added == null) {
 			this.logger.info("Filter " + name + " was not registered "
 					+ "(possibly already registered?)");
 			return;
 		}
-		configure(added);
+		configure(added);  //filter映射到/*
 	}
 
 	/**
@@ -238,6 +238,7 @@ abstract class AbstractFilterRegistrationBean extends RegistrationBean {
 	public abstract Filter getFilter();
 
 	/**
+     * FilterRegistration.Dynamic 可以动态的添加servlet filter等
 	 * Configure registration settings. Subclasses can override this method to perform
 	 * additional configuration if required.
 	 * @param registration the registration

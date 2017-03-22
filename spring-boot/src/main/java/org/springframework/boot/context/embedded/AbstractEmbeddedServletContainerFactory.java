@@ -171,7 +171,7 @@ public abstract class AbstractEmbeddedServletContainerFactory
 	 */
 	protected File createTempDir(String prefix) {
 		try {
-			File tempDir = File.createTempFile(prefix + ".", "." + getPort());
+			File tempDir = File.createTempFile(prefix + ".", "." + getPort());  //通过前缀和后缀创建临时目录
 			tempDir.delete();
 			tempDir.mkdir();
 			tempDir.deleteOnExit();

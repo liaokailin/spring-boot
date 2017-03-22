@@ -44,7 +44,7 @@ class OnWebApplicationCondition extends SpringBootCondition {
 	public ConditionOutcome getMatchOutcome(ConditionContext context,
 			AnnotatedTypeMetadata metadata) {
 		boolean webApplicationRequired = metadata
-				.isAnnotated(ConditionalOnWebApplication.class.getName());
+				.isAnnotated(ConditionalOnWebApplication.class.getName());  //存在该注解表示必须要web环境
 		ConditionOutcome webApplication = isWebApplication(context, metadata);
 
 		if (webApplicationRequired && !webApplication.isMatch()) {
@@ -58,26 +58,32 @@ class OnWebApplicationCondition extends SpringBootCondition {
 		return ConditionOutcome.match(webApplication.getMessage());
 	}
 
+	/**
+	 * 判断是否为web应用
+	 * @param context
+	 * @param metadata
+	 * @return
+	 */
 	private ConditionOutcome isWebApplication(ConditionContext context,
 			AnnotatedTypeMetadata metadata) {
 
-		if (!ClassUtils.isPresent(WEB_CONTEXT_CLASS, context.getClassLoader())) {
+		if (!ClassUtils.isPresent(WEB_CONTEXT_CLASS, context.getClassLoader())) {  //判断指定类是否存在
 			return ConditionOutcome.noMatch("web application classes not found");
 		}
 
 		if (context.getBeanFactory() != null) {
-			String[] scopes = context.getBeanFactory().getRegisteredScopeNames();
+			String[] scopes = context.getBeanFactory().getRegisteredScopeNames();  //判断web特有的scope
 			if (ObjectUtils.containsElement(scopes, "session")) {
 				return ConditionOutcome.match("found web application 'session' scope");
 			}
 		}
 
-		if (context.getEnvironment() instanceof StandardServletEnvironment) {
+		if (context.getEnvironment() instanceof StandardServletEnvironment) {  //看Environment
 			return ConditionOutcome
 					.match("found web application StandardServletEnvironment");
 		}
 
-		if (context.getResourceLoader() instanceof WebApplicationContext) {
+		if (context.getResourceLoader() instanceof WebApplicationContext) {  //判断上下文
 			return ConditionOutcome.match("found web application WebApplicationContext");
 		}
 

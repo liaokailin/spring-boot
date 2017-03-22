@@ -31,7 +31,7 @@ import org.springframework.core.annotation.AliasFor;
  * <p>
  * Note that contrary to {@code @Value}, SpEL expressions are not evaluated since property
  * values are externalized.
- *
+ * 入口 @EnableConfigurationProperties注解  通过ConfigurationPropertiesAutoConfiguration启用@EnableConfigurationProperties注解
  * @author Dave Syer
  * @see ConfigurationPropertiesBindingPostProcessor
  * @see EnableConfigurationProperties

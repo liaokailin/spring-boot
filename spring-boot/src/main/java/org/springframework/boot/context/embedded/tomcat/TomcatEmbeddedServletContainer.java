@@ -107,7 +107,7 @@ public class TomcatEmbeddedServletContainer implements EmbeddedServletContainer 
 
 			// Unlike Jetty, all Tomcat threads are daemon threads. We create a
 			// blocking non-daemon to stop immediate shutdown
-			startDaemonAwaitThread();
+			startDaemonAwaitThread();  //tomcat需要调用tomcat.getServer().await()阻塞
 		}
 		catch (Exception ex) {
 			throw new EmbeddedServletContainerException("Unable to start embedded Tomcat",

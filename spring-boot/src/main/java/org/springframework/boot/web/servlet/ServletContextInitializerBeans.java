@@ -71,12 +71,12 @@ public class ServletContextInitializerBeans
 
 	private final MultiValueMap<Class<?>, ServletContextInitializer> initializers;
 
-	private List<ServletContextInitializer> sortedList;
+	private List<ServletContextInitializer> sortedList;  //排序完成的所有的ServletContextInitializer, 迭代时遍历sortedList
 
 	public ServletContextInitializerBeans(ListableBeanFactory beanFactory) {
 		this.initializers = new LinkedMultiValueMap<Class<?>, ServletContextInitializer>();
-		addServletContextInitializerBeans(beanFactory);
-		addAdaptableBeans(beanFactory);
+		addServletContextInitializerBeans(beanFactory);  //处理ServletContextInitializer
+		addAdaptableBeans(beanFactory);  //核心方法，将所有申明的Servlet ，Filter等转换成对应的XxxRegistrationBean
 		List<ServletContextInitializer> sortedInitializers = new ArrayList<ServletContextInitializer>();
 		for (Map.Entry<?, List<ServletContextInitializer>> entry : this.initializers
 				.entrySet()) {
@@ -86,6 +86,11 @@ public class ServletContextInitializerBeans
 		this.sortedList = Collections.unmodifiableList(sortedInitializers);
 	}
 
+	/**
+	 * 获取注册的所有ServletContextInitializer
+	 * ServletRegistrationBean，FilterRegistrationBean，DelegatingFilterProxyRegistrationBean，ServletListenerRegistrationBean
+	 * @param beanFactory
+	 */
 	private void addServletContextInitializerBeans(ListableBeanFactory beanFactory) {
 		for (Entry<String, ServletContextInitializer> initializerBean : getOrderedBeansOfType(
 				beanFactory, ServletContextInitializer.class)) {
@@ -94,6 +99,12 @@ public class ServletContextInitializerBeans
 		}
 	}
 
+	/**
+	 * 定义filter，servlet的核心操作实现
+	 * @param beanName
+	 * @param initializer
+	 * @param beanFactory
+	 */
 	private void addServletContextInitializerBean(String beanName,
 			ServletContextInitializer initializer, ListableBeanFactory beanFactory) {
 		if (initializer instanceof ServletRegistrationBean) {
@@ -154,11 +165,11 @@ public class ServletContextInitializerBeans
 	private void addAdaptableBeans(ListableBeanFactory beanFactory) {
 		MultipartConfigElement multipartConfig = getMultipartConfig(beanFactory);
 		addAsRegistrationBean(beanFactory, Servlet.class,
-				new ServletRegistrationBeanAdapter(multipartConfig));
+				new ServletRegistrationBeanAdapter(multipartConfig));  //将所有类型的Servlet对应bean转换成ServletRegistrationBean
 		addAsRegistrationBean(beanFactory, Filter.class,
 				new FilterRegistrationBeanAdapter());
 		for (Class<?> listenerType : ServletListenerRegistrationBean
-				.getSupportedTypes()) {
+				.getSupportedTypes()) {  //处理servlet中支持的监听
 			addAsRegistrationBean(beanFactory, EventListener.class,
 					(Class<EventListener>) listenerType,
 					new ServletListenerRegistrationBeanAdapter());
@@ -179,7 +190,7 @@ public class ServletContextInitializerBeans
 	private <T, B extends T> void addAsRegistrationBean(ListableBeanFactory beanFactory,
 			Class<T> type, Class<B> beanType, RegistrationBeanAdapter<T> adapter) {
 		List<Map.Entry<String, B>> beans = getOrderedBeansOfType(beanFactory, beanType,
-				this.seen);
+				this.seen);  //this.seen被排除掉，前面已处理
 		for (Entry<String, B> bean : beans) {
 			if (this.seen.add(bean.getValue())) {
 				int order = getOrder(bean.getValue());
@@ -244,7 +255,7 @@ public class ServletContextInitializerBeans
 	@Override
 	public Iterator<ServletContextInitializer> iterator() {
 		return this.sortedList.iterator();
-	}
+	}  //迭代时遍历sortedList
 
 	@Override
 	public int size() {

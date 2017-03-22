@@ -64,11 +64,15 @@ public class EmbeddedServletContainerCustomizerBeanPostProcessor
 
 	private void postProcessBeforeInitialization(
 			ConfigurableEmbeddedServletContainer bean) {
-		for (EmbeddedServletContainerCustomizer customizer : getCustomizers()) {
+		for (EmbeddedServletContainerCustomizer customizer : getCustomizers()) {  //
 			customizer.customize(bean);
 		}
 	}
 
+	/**
+	 *  ServerProperties为其中EmbeddedServletContainerCustomizer子类
+	 * @return
+	 */
 	private Collection<EmbeddedServletContainerCustomizer> getCustomizers() {
 		if (this.customizers == null) {
 			// Look up does not include the parent context

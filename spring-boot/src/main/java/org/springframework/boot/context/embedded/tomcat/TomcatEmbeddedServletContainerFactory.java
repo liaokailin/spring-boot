@@ -153,7 +153,7 @@ public class TomcatEmbeddedServletContainerFactory
 	@Override
 	public EmbeddedServletContainer getEmbeddedServletContainer(
 			ServletContextInitializer... initializers) {
-		Tomcat tomcat = new Tomcat();
+		Tomcat tomcat = new Tomcat();  //构建tomcat实例
 		File baseDir = (this.baseDirectory != null ? this.baseDirectory
 				: createTempDir("tomcat"));
 		tomcat.setBaseDir(baseDir.getAbsolutePath());
@@ -173,7 +173,7 @@ public class TomcatEmbeddedServletContainerFactory
 	protected void prepareContext(Host host, ServletContextInitializer[] initializers) {
 		File docBase = getValidDocumentRoot();
 		docBase = (docBase != null ? docBase : createTempDir("tomcat-docbase"));
-		TomcatEmbeddedContext context = new TomcatEmbeddedContext();
+		TomcatEmbeddedContext context = new TomcatEmbeddedContext();  //上下文，继承StandardContext
 		context.setName(getContextPath());
 		context.setDisplayName(getDisplayName());
 		context.setPath(getContextPath());

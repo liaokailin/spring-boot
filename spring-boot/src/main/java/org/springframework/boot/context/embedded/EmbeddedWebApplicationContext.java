@@ -134,6 +134,9 @@ public class EmbeddedWebApplicationContext extends GenericWebApplicationContext 
 		}
 	}
 
+	/**
+	 * 覆写父类方法，是加载内嵌容器的核心入口
+	 */
 	@Override
 	protected void onRefresh() {
 		super.onRefresh();
@@ -162,11 +165,14 @@ public class EmbeddedWebApplicationContext extends GenericWebApplicationContext 
 		stopAndReleaseEmbeddedServletContainer();
 	}
 
+    /**
+     * 创建内嵌容器
+     */
 	private void createEmbeddedServletContainer() {
 		EmbeddedServletContainer localContainer = this.embeddedServletContainer;
 		ServletContext localServletContext = getServletContext();
 		if (localContainer == null && localServletContext == null) {
-			EmbeddedServletContainerFactory containerFactory = getEmbeddedServletContainerFactory();
+			EmbeddedServletContainerFactory containerFactory = getEmbeddedServletContainerFactory();  //获取自动加载的工厂
 			this.embeddedServletContainer = containerFactory
 					.getEmbeddedServletContainer(getSelfInitializer());
 		}
@@ -226,14 +232,14 @@ public class EmbeddedWebApplicationContext extends GenericWebApplicationContext 
 		prepareEmbeddedWebApplicationContext(servletContext);
 		ConfigurableListableBeanFactory beanFactory = getBeanFactory();
 		ExistingWebApplicationScopes existingScopes = new ExistingWebApplicationScopes(
-				beanFactory);
+				beanFactory);  //设置web scope
 		WebApplicationContextUtils.registerWebApplicationScopes(beanFactory,
 				getServletContext());
 		existingScopes.restore();
 		WebApplicationContextUtils.registerEnvironmentBeans(beanFactory,
 				getServletContext());
-		for (ServletContextInitializer beans : getServletContextInitializerBeans()) {
-			beans.onStartup(servletContext);
+		for (ServletContextInitializer beans : getServletContextInitializerBeans()) {  //核心方法
+			beans.onStartup(servletContext);  //servlet、filter和listen都会注册到ServletContext上
 		}
 	}
 

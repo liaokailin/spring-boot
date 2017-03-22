@@ -19,13 +19,15 @@ package org.springframework.boot.autoconfigure.condition;
 import org.springframework.util.ObjectUtils;
 
 /**
+ *
+ * condition匹配的结果
  * Outcome for a condition match, including log message.
  *
  * @author Phillip Webb
  */
 public class ConditionOutcome {
 
-	private final boolean match;
+	private final boolean match;  //true 表示匹配，false表示不匹配
 
 	private final String message;
 

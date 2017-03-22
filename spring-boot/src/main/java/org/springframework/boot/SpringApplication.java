@@ -350,7 +350,7 @@ public class SpringApplication {
 			context = createApplicationContext();  //AnnotationConfigEmbeddedWebApplicationContext
 			prepareContext(context, environment, listeners, applicationArguments,
 					printedBanner);
-			refreshContext(context);
+			refreshContext(context);  //load beandefinition
 			afterRefresh(context, applicationArguments);
 			listeners.finished(context, null);
 			stopWatch.stop();

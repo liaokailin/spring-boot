@@ -120,6 +120,11 @@ public class EmbeddedServletContainerAutoConfiguration {
 
 		private ConfigurableListableBeanFactory beanFactory;
 
+		/**
+		 * 在解析import的时候自动绑定各种aware
+		 * @param beanFactory
+		 * @throws BeansException
+		 */
 		@Override
 		public void setBeanFactory(BeanFactory beanFactory) throws BeansException {
 			if (beanFactory instanceof ConfigurableListableBeanFactory) {

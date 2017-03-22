@@ -111,7 +111,7 @@ public class ServletListenerRegistrationBean<T extends EventListener>
 			return;
 		}
 		try {
-			servletContext.addListener(this.listener);
+			servletContext.addListener(this.listener);  //添加监听
 		}
 		catch (RuntimeException ex) {
 			throw new IllegalStateException(
